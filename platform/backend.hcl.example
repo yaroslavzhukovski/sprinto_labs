@@ -1,0 +1,9 @@
+# Example only (do not commit secrets)
+# resource_group_name  = "rg-tfstate"
+# storage_account_name = "sttfstate123"
+# container_name       = "tfstate"
+# key                  = "platform.tfstate"
+resource_group_name  = "rg-tfstate-shared"
+storage_account_name = "sttfstateexample001"
+container_name       = "tfstate"
+key                  = "liaazurelab/platform.tfstate"

@@ -1,0 +1,16 @@
+# Terraform runtime dirs/state
+**/.terraform/*
+**/*.tfstate
+**/*.tfstate.*
+**/*.tfplan
+**/*.tfplan.bin
+**/tfplan.bin
+platform/backend.hcl
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Secrets / local env
+.env

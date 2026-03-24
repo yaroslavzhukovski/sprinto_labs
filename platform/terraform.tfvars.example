@@ -1,0 +1,25 @@
+subscription_id = "00000000-0000-0000-0000-000000000000"
+tenant_id       = "00000000-0000-0000-0000-000000000000"
+location        = "swedencentral"
+admin_username  = "azureuser"
+
+admin_ssh_public_key = "ssh-ed25519 AAAA... student@course"
+alert_email          = "student01@example.org"
+monthly_budget_amount = 20
+
+tags = {
+  course = "azure-terraform-2026"
+}
+
+lab_flags = {
+  break_nsg                = false
+  break_routing            = false
+  break_storage_rbac       = false
+  enable_private_endpoint  = false
+  break_private_dns        = false
+  disable_diagnostics      = false
+  enable_bastion           = false
+  enable_vmss              = false
+  public_storage_network   = true
+  public_key_vault_network = true
+}
