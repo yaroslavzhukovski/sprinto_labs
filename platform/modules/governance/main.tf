@@ -23,7 +23,9 @@ resource "azurerm_policy_definition" "allowed_locations" {
                 in = [
                   "Microsoft.Insights/actionGroups",
                   "Microsoft.Insights/metricAlerts",
-                  "Microsoft.Network/networkWatchers"
+                  "Microsoft.Network/networkWatchers",
+                  "Microsoft.Network/privateDnsZones",
+                  "Microsoft.Network/privateDnsZones/virtualNetworkLinks"
                 ]
               }
             ]

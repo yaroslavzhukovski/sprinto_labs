@@ -73,6 +73,18 @@ resource "azurerm_network_security_group" "hub_vm" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+
+  security_rule {
+    name                       = "allow-icmp-from-spoke"
+    priority                   = 110
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Icmp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = local.subnet_prefixes.spoke_vm
+    destination_address_prefix = "*"
+  }
 }
 
 resource "azurerm_network_security_group" "spoke_subnet" {
@@ -224,16 +236,20 @@ resource "azurerm_route_table" "spoke" {
   location            = var.location
   resource_group_name = var.rg_name
   tags                = var.tags
-
-  route {
-    name                   = "default-egress"
-    address_prefix         = "0.0.0.0/0"
-    next_hop_type          = var.lab_flags.break_routing ? "VirtualAppliance" : "Internet"
-    next_hop_in_ip_address = var.lab_flags.break_routing ? "10.254.254.254" : null
-  }
 }
 
 resource "azurerm_subnet_route_table_association" "spoke_vm" {
   subnet_id      = azurerm_subnet.spoke_vm.id
   route_table_id = azurerm_route_table.spoke.id
+}
+
+resource "azurerm_route" "spoke_to_hub_breaker" {
+  count = var.lab_flags.break_routing ? 1 : 0
+
+  name                   = "to-hub-lab-breaker"
+  resource_group_name    = var.rg_name
+  route_table_name       = azurerm_route_table.spoke.name
+  address_prefix         = "10.10.0.0/16"
+  next_hop_type          = "VirtualAppliance"
+  next_hop_in_ip_address = "10.254.254.254"
 }

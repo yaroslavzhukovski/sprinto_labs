@@ -7,15 +7,15 @@ resource "azurerm_storage_account" "this" {
   min_tls_version                 = "TLS1_2"
   https_traffic_only_enabled      = true
   public_network_access_enabled   = var.public_network_enabled
-  shared_access_key_enabled      = !var.disable_shared_key_auth
-  allow_nested_items_to_be_public = true
+  shared_access_key_enabled       = !var.disable_shared_key_auth
+  allow_nested_items_to_be_public = false
   tags                            = var.tags
 }
 
 resource "azurerm_storage_container" "labs" {
   name                  = "labs"
   storage_account_id    = azurerm_storage_account.this.id
-  container_access_type = "blob"
+  container_access_type = "private"
 }
 
 resource "azurerm_private_dns_zone" "blob" {

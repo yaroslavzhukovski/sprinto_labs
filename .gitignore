@@ -5,12 +5,25 @@
 **/*.tfplan
 **/*.tfplan.bin
 **/tfplan.bin
+**/crash.log
+**/override.tf
+**/override.tf.json
+**/*_override.tf
+**/*_override.tf.json
 platform/backend.hcl
+platform/backend.azurerm.tf
+platform/terraform.tfvars
 
 # Editors / OS
 .vscode/
 .idea/
 .DS_Store
+Thumbs.db
+Desktop.ini
 
 # Secrets / local env
 .env
+
+# Local agent/helper instructions
+AGENTS.md
+PROJECT_CONTEXT.md

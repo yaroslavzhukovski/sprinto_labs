@@ -1,127 +1,117 @@
-# Azure Learning Platform (Terraform, 2026)
+# Azure Learning Platform
 
-Modern, repeatable, low-cost Azure training platform for a 2-3 month hands-on course.
+Beginner-friendly Azure lab environment built with Terraform.
 
-## Prerequisites (install before first run)
+This repository is for students who are learning Azure, not advanced Terraform. Terraform is used here to create the same lab environment for every student, keep the labs repeatable, and make it easy to destroy and rebuild the environment between lessons.
 
-Students must install these tools first:
+If you are starting for the first time, read [GETTING_STARTED.md](/Users/yaros/Documents/LiaAzureLab/GETTING_STARTED.md) and follow it step by step.
 
-1. Terraform CLI (recommended: 1.8+)
-2. Azure CLI (`az`)
-3. OpenSSH client (`ssh` and `ssh-keygen`)
+## What This Project Does
 
-Optional:
+This project creates a small Azure platform that students can use for guided hands-on labs.
 
-1. Git (to clone the repository)
+The normal learning flow is:
 
-Important:
+1. Deploy a healthy baseline environment.
+2. Confirm that the baseline works.
+3. Apply a lab scenario from `labs/tfvars/`.
+4. Troubleshoot the issue in Azure Portal, Azure CLI, or from the VMs.
+5. Fix the problem.
+6. Destroy the environment when the lesson is finished.
 
-- Azure providers are not installed manually.
-- `terraform init` automatically downloads required providers from `versions.tf`.
+The labs focus on Azure concepts such as:
 
-## Install tools (official docs)
+- networking
+- routing
+- RBAC
+- storage access
+- private access
+- diagnostics and monitoring
+- Bastion
+- Azure Policy and compliance
 
-Use the official installation guides instead of pinned commands in this repo.
-They always contain the most current steps for Windows, macOS, and Linux.
+## Who This Is For
 
-Required:
+This repository is designed for beginners.
 
-1. Terraform CLI: https://developer.hashicorp.com/terraform/install
-2. Azure CLI: https://learn.microsoft.com/cli/azure/install-azure-cli
-3. OpenSSH client (`ssh` and `ssh-keygen`)
+Assume that the student:
 
-## Preflight checks (run before `plan/apply`)
+- is new to Azure
+- may have little or no Terraform experience
+- may need step-by-step instructions
+- should be able to learn by comparing a healthy state with a changed or broken state
 
-Run these commands and confirm they work:
+Because of that, the project aims to stay:
 
-```bash
-terraform version
-ssh -V
-```
+- simple
+- low-cost
+- predictable
+- easy to teach
+- easy to support
 
-If these checks fail, Terraform runs will fail too.
+## Repository Structure
 
-## Find Subscription ID and Tenant ID in Azure Portal
+The repository is intentionally small.
 
-Use Azure Portal (no Azure CLI required for this step):
+- `platform/`
+  The Terraform code for the baseline Azure environment.
+- `platform/modules/`
+  The Terraform modules used by the baseline platform.
+- `labs/docs/`
+  Student lab instructions.
+- `labs/tfvars/`
+  Lab scenario variable files that change the baseline into a specific lab state.
+- `answers/`
+  Instructor answer keys for the labs.
+- `labs/README.md`
+  Short lab overview.
 
-1. Open Azure Portal and go to `Subscriptions`.
-2. Open your student subscription.
-3. Copy `Subscription ID` into `platform/terraform.tfvars` as `subscription_id`.
-4. In the same subscription pane, copy `Directory (tenant) ID` into `platform/terraform.tfvars` as `tenant_id`.
+## What Gets Deployed
 
-## Why this exists
+The baseline platform includes:
 
-Students learn Azure operations by deploying real infrastructure with Terraform and then resolving intentionally introduced platform issues in Azure Portal/CLI.
+- a hub and spoke virtual network design
+- two Linux virtual machines
+- network security groups
+- route table
+- storage account and blob container
+- Key Vault
+- managed identities and RBAC assignments
+- Log Analytics Workspace
+- diagnostic settings
+- monitoring resources
+- Azure Policy assignment
+- budget configuration
 
-## Core principles
+Some labs also enable additional resources such as Azure Bastion.
 
-- Each student uses a dedicated Azure subscription.
-- Baseline stays small and inexpensive.
-- Labs force diagnosis in Azure (NSG, routes, RBAC, private endpoint, monitoring), not only code edits.
-- Governance is visible through Azure Policy deny/audit outcomes.
+Resource names include a unique suffix so that different students can deploy into separate subscriptions without common global-name conflicts.
 
-## Repository structure
+## First-Time Setup
 
-- `platform/`: baseline Terraform deployment.
-- `platform/modules/`: reusable module boundaries (network, compute, identity, storage, key vault, monitoring, governance).
-- `labs/tfvars/`: scenario toggles.
-- `labs/docs/`: lab instructions and success criteria.
-- `policies/`: standalone policy JSON artifacts.
-- `docs/`: architecture, runbooks, troubleshooting.
-- `.github/workflows/terraform-ci.yml`: CI checks.
+Use [GETTING_STARTED.md](/Users/yaros/Documents/LiaAzureLab/GETTING_STARTED.md) for the full step-by-step setup:
 
-## Baseline resources
+- install tools
+- sign in to Azure
+- prepare `platform/terraform.tfvars`
+- create an SSH key
+- run Terraform
+- deploy the baseline
+- apply labs
+- destroy the environment
 
-- Hub/spoke VNets with peering.
-- Multiple subnets and route table.
-- Two Linux VMs (B-series), managed identities.
-- VM1 has a public IP for admin access; VM2 is private (access from VM1/Bastion).
-- NSGs (some attached, one intentionally available for fault scenarios).
-- Storage account and container.
-- Key Vault with RBAC authorization.
-- Log Analytics, diagnostic settings, action group, metric alert.
-- Subscription policy initiative assignment and budget alert.
+## Baseline First, Labs Second
 
-Naming note:
-- Resource names include an automatic unique suffix derived from the subscription ID to reduce global-name collisions (for example Storage Account and Key Vault).
+Always deploy the healthy baseline first.
 
-## Quick start (direct Terraform, recommended)
+Why this matters:
 
-1. Edit `platform/terraform.tfvars` and fill your real values.
-2. Optional remote state (Azure Storage):
-   - Copy `platform/backend.azurerm.tf.example` to `platform/backend.azurerm.tf`
-   - Copy `platform/backend.hcl.example` to `platform/backend.hcl`
-   - Fill values in `platform/backend.hcl`
-3. Run:
+- it proves the environment works
+- it shows students what healthy behavior looks like
+- it makes troubleshooting easier
+- it separates deployment problems from lab problems
 
-```bash
-cd platform
-terraform init
-terraform fmt -recursive
-terraform validate
-terraform plan -var-file=terraform.tfvars -out=tfplan.bin
-terraform apply tfplan.bin
-```
-
-4. To tear down:
-
-```bash
-cd platform
-terraform destroy -var-file=terraform.tfvars
-```
-
-## Baseline first, labs second
-
-Start with baseline first, then switch to lab files.
-
-Why:
-
-1. Baseline proves the platform is healthy before introducing intentional faults.
-2. If first deployment fails, you can separate setup issues from lab scenario issues.
-3. Students see expected behavior first, then practice troubleshooting.
-
-Example flow:
+Example:
 
 ```bash
 cd platform
@@ -129,104 +119,155 @@ terraform apply -var-file=terraform.tfvars
 terraform apply -var-file=../labs/tfvars/lab01_nsg.tfvars
 ```
 
-When destroying, use the same var file used in the last apply:
+When you destroy the environment, use the same variable file that matches the current deployed state.
+
+Example:
 
 ```bash
 cd platform
 terraform destroy -var-file=../labs/tfvars/lab01_nsg.tfvars
 ```
 
-## Common startup failures (and fixes)
-
-1. `terraform: command not found`
-   - Terraform is not installed or not on `PATH`.
-2. `az: command not found`
-   - Azure CLI is not installed or not on `PATH`.
-3. Authentication errors during `plan/apply`
-   - Run `az login` and select the correct subscription.
-4. `Error: building account...` or permission denied
-   - Your account lacks RBAC rights on the target subscription.
-5. SSH key variable errors
-   - `admin_ssh_public_key` must be a valid single-line `.pub` key.
-6. Policy deny errors
-   - Deployment conflicts with course policy (location/SKU/type restrictions).
-
-## Which shell to use
-
-- Windows: use `PowerShell 7` (recommended).
-- Linux: use your normal terminal (`bash`/`zsh`).
-- macOS: use Terminal (`zsh` by default).
-
-All Terraform commands in this repository work from those shells.
-
-## SSH key setup by OS (`admin_ssh_public_key`)
-
-`admin_ssh_public_key` must be a single-line public key value (starts with `ssh-ed25519` or `ssh-rsa`).
-Generate this key pair once per student machine, then reuse it for all labs.
-
-### Windows (PowerShell)
-
-```powershell
-ssh-keygen -t ed25519 -C "azure-lab" -f "$HOME\.ssh\azure-lab-ed25519"
-Get-Content "$HOME\.ssh\azure-lab-ed25519.pub"
-```
-
-### Linux (bash/zsh)
-
-```bash
-ssh-keygen -t ed25519 -C "azure-lab" -f ~/.ssh/azure-lab-ed25519
-cat ~/.ssh/azure-lab-ed25519.pub
-```
-
-### macOS (zsh/bash)
-
-```bash
-ssh-keygen -t ed25519 -C "azure-lab" -f ~/.ssh/azure-lab-ed25519
-cat ~/.ssh/azure-lab-ed25519.pub
-```
-
-Copy the printed public key line into `platform/terraform.tfvars`:
-
-```hcl
-admin_ssh_public_key = "ssh-ed25519 AAAA... azure-lab"
-```
-
-Private key location (do not share this file):
-
-- Windows: `$HOME\.ssh\azure-lab-ed25519`
-- Linux/macOS: `~/.ssh/azure-lab-ed25519`
-
-Public key location (safe to paste into tfvars):
-
-- Windows: `$HOME\.ssh\azure-lab-ed25519.pub`
-- Linux/macOS: `~/.ssh/azure-lab-ed25519.pub`
-
-`student_id` is optional in this repository now. If omitted, Terraform uses a default value.
-
 ## Labs
 
-- `lab01_nsg`: blocked access from NSG priority conflict.
-- `lab02_routing`: broken egress from invalid next hop.
-- `lab03_storage_rbac`: managed identity role insufficient.
-- `lab04_private_endpoint_dns`: storage private access and DNS issue.
-- `lab05_monitoring_alerts`: missing diagnostics and alert validation.
-- `lab06_bastion_vmss`: bastion access and VMSS scale operations.
+The labs are designed to stay within a beginner-friendly range and usually focus on one main idea.
 
-## 2026 Terraform standards used
+### Lab 1 - Network Security Groups
 
-- `required_version` and explicit provider constraints.
-- Local state by default; optional Azure Storage backend via `backend.azurerm.tf` + `backend.hcl`.
-- `.terraform.lock.hcl` should be committed.
-- `init -> fmt -> validate -> plan -> apply` workflow.
-- module-first layout with strict input/output contracts.
+File:
+- `labs/tfvars/lab01_nsg.tfvars`
+
+Students learn:
+
+- subnet NSG vs NIC NSG
+- effective security rules
+- how deny rules break connectivity
+
+### Lab 2 - Routing
+
+File:
+- `labs/tfvars/lab02_routing.tfvars`
+
+Students learn:
+
+- route tables
+- effective routes
+- private connectivity between VNets
+- how a wrong next hop breaks routing
+
+### Lab 3 - Storage RBAC
+
+File:
+- `labs/tfvars/lab03_storage_rbac.tfvars`
+
+Students learn:
+
+- blob data-plane permissions
+- read vs write actions
+- why access can fail even when the storage account exists
+
+### Lab 4 - Public vs Private Storage Access
+
+File:
+- `labs/tfvars/lab04_private_endpoint_dns.tfvars`
+
+Students learn:
+
+- public access vs private access
+- private endpoint basics
+- private DNS basics
+- why DNS matters for private access
+
+### Lab 5 - Diagnostics and Log Analytics
+
+File:
+- `labs/tfvars/lab05_monitoring_alerts.tfvars`
+
+Students learn:
+
+- what diagnostic settings do
+- where logs are stored
+- how Log Analytics Workspace is used
+- why a workspace can exist while monitoring data is still missing
+
+### Lab 6 - Azure Bastion
+
+File:
+- `labs/tfvars/lab06_bastion_vmss.tfvars`
+
+Students learn:
+
+- what Azure Bastion is
+- why companies use it
+- secure VM access over private networking
+- Bastion in a hub-and-spoke design
+
+### Lab 7 - Azure Policy
+
+Student instructions:
+- `labs/docs/lab07.md`
+
+Students learn:
+
+- policy definitions, initiatives, and assignments
+- deny vs audit
+- compliance vs non-compliance
+- the difference between Azure Policy and RBAC
+
+## Important Azure 2026 Networking Note
+
+Azure networking behavior changed at the end of March 2026.
+
+For new virtual networks created after March 31, 2026:
+
+- subnets are private by default
+- default outbound internet access should not be assumed
+
+Because of that, this project avoids depending on implicit outbound access for the lab design.
+
+## Common Problems
+
+### `terraform` not found
+
+Terraform is not installed or is not on your `PATH`.
+
+### `az` not found
+
+Azure CLI is not installed or is not on your `PATH`.
+
+### Authentication errors during Terraform runs
+
+Run:
+
+```bash
+az login
+```
+
+Then confirm you are using the correct subscription.
+
+### Policy deny errors during deployment
+
+The environment includes Azure Policy guardrails. If deployment is blocked, check:
+
+- region
+- VM size
+- storage SKU
+- allowed resource types
+
+### SSH key errors
+
+Make sure `admin_ssh_public_key` contains a valid single-line public key.
+
+## Which Shell to Use
+
+- Windows: PowerShell 7 is recommended
+- Linux: bash or zsh
+- macOS: Terminal with zsh or bash
 
 ## References
 
-- https://developer.hashicorp.com/terraform/language
-- https://developer.hashicorp.com/terraform/cli/commands
-- https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs
-- https://learn.microsoft.com/en-us/azure/developer/terraform/
-- https://learn.microsoft.com/en-us/azure/governance/policy/overview
-
-
-
+- Terraform language: https://developer.hashicorp.com/terraform/language
+- Terraform CLI: https://developer.hashicorp.com/terraform/cli/commands
+- AzureRM provider: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs
+- Terraform on Azure: https://learn.microsoft.com/en-us/azure/developer/terraform/
+- Azure Policy overview: https://learn.microsoft.com/en-us/azure/governance/policy/overview

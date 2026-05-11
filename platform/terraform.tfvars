@@ -4,10 +4,10 @@ location        = "swedencentral"
 admin_username  = "azureuser"
 
 # Paste your full public key line from ~/.ssh/*.pub or $HOME\.ssh\*.pub
-admin_ssh_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJfJo0us8+MZ8NeiqmIEYXLSOQsVN3klwJq4PSYvMnlE azure-lab"
+admin_ssh_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPY7SZom5elzn1r9Bw0mINpaBQRLdEQFV/vcpTESHrP3 azure-lab"
 
 # Optional but recommended for alert notifications
-alert_email           = "yaroslav.zhukovski@gmail.com"
+alert_email           = "y.z@gmail.com"
 monthly_budget_amount = 10
 
 

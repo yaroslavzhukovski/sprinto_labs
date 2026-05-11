@@ -16,4 +16,4 @@ These files are instructor-facing reference solutions for each lab.
 - `lab04_answer.md`
 - `lab05_answer.md`
 - `lab06_answer.md`
-
+- `lab07_answer.md`

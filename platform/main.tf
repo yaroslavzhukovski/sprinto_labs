@@ -40,7 +40,7 @@ module "storage" {
   enable_private_endpoint    = var.lab_flags.enable_private_endpoint
   break_private_dns          = var.lab_flags.break_private_dns
   private_endpoint_subnet_id = module.network.subnet_ids.spoke_private_endpoints
-  private_dns_vnet_id        = module.network.vnet_ids.spoke
+  private_dns_vnet_id        = module.network.vnet_ids.hub
   depends_on                 = [module.governance]
 }
 

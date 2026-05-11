@@ -22,7 +22,9 @@ locals {
     "Microsoft.Network/bastionHosts",
     "Microsoft.Network/privateEndpoints",
     "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+    "Microsoft.Network/privateEndpoints/privateLinkServiceProxies",
     "Microsoft.Network/privateDnsZones",
+    "Microsoft.Network/privateDnsZones/A",
     "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
     "Microsoft.Network/networkWatchers",
     "Microsoft.Network/networkWatchers/flowLogs",
@@ -31,14 +33,22 @@ locals {
     "Microsoft.Compute/virtualMachineScaleSets",
     "Microsoft.ManagedIdentity/userAssignedIdentities",
     "Microsoft.Storage/storageAccounts",
+    "Microsoft.Storage/storageAccounts/privateEndpointConnections",
+    "Microsoft.Storage/storageAccounts/privateEndpointConnectionProxies",
     "Microsoft.Storage/storageAccounts/blobServices",
+    "Microsoft.Storage/storageAccounts/fileServices",
+    "Microsoft.Storage/storageAccounts/queueServices",
+    "Microsoft.Storage/storageAccounts/tableServices",
     "Microsoft.Storage/storageAccounts/blobServices/containers",
     "Microsoft.KeyVault/vaults",
     "Microsoft.OperationalInsights/workspaces",
     "Microsoft.OperationalInsights/workspaces/tables",
+    "Microsoft.OperationalInsights/workspaces/savedSearches",
     "Microsoft.Insights/diagnosticSettings",
     "Microsoft.Insights/metricAlerts",
     "Microsoft.Insights/actionGroups",
-    "Microsoft.Insights/scheduledQueryRules"
+    "Microsoft.Insights/scheduledQueryRules",
+    "Microsoft.Security/policies",
+    "Microsoft.Advisor/recommendations"
   ]
 }
