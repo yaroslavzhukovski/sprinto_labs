@@ -80,6 +80,7 @@ Run:
 
 ```bash
 cd platform
+terraform init
 terraform apply -var-file=terraform.tfvars
 ```
 
@@ -258,6 +259,7 @@ Run:
 
 ```bash
 cd platform
+terraform init
 terraform apply -var-file=../labs/tfvars/lab05_monitoring_alerts.tfvars
 ```
 
@@ -467,3 +469,4 @@ When the lab is finished, return to your own computer terminal and destroy the e
 cd platform
 terraform destroy -var-file=../labs/tfvars/lab05_monitoring_alerts.tfvars
 ```
+

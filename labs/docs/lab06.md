@@ -64,6 +64,7 @@ Run:
 
 ```bash
 cd platform
+terraform init
 terraform apply -var-file=terraform.tfvars
 ```
 
@@ -108,6 +109,7 @@ Run:
 
 ```bash
 cd platform
+terraform init
 terraform apply -var-file=../labs/tfvars/lab06_bastion_vmss.tfvars
 ```
 
@@ -251,3 +253,4 @@ Then destroy the environment:
 cd platform
 terraform destroy -var-file=../labs/tfvars/lab06_bastion_vmss.tfvars
 ```
+

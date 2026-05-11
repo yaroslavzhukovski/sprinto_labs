@@ -40,18 +40,7 @@ Use the same Azure account for:
 
 You will need:
 
-- the public IP address of VM1
-- the private IP address of VM1
-- the private IP address of VM2
 - the SSH private key that matches `admin_ssh_public_key`
-
-Find the IP addresses:
-
-```bash
-cd platform
-terraform output vm_public_ips
-terraform output vm_private_ips
-```
 
 ## What "hub" and "spoke" mean in this lab
 
@@ -80,6 +69,7 @@ Run:
 
 ```bash
 cd platform
+terraform init
 terraform apply -var-file=terraform.tfvars
 ```
 
@@ -250,6 +240,7 @@ Run:
 
 ```bash
 cd platform
+terraform init
 terraform apply -var-file=../labs/tfvars/lab02_routing.tfvars
 ```
 
@@ -427,3 +418,4 @@ terraform destroy -var-file=../labs/tfvars/lab02_routing.tfvars
 ```
 
 Use the Lab 2 tfvars file for destroy because the current deployed state is the Lab 2 scenario.
+

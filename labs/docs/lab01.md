@@ -44,8 +44,6 @@ Students should first see what healthy connectivity looks like before they troub
 
 You will need:
 
-- the public IP address of VM1
-- the private IP address of VM2
 - the SSH private key that matches `admin_ssh_public_key`
 
 Default private key location if you followed the setup guide:
@@ -55,29 +53,6 @@ Default private key location if you followed the setup guide:
 - macOS: `~/.ssh/azure-lab-ed25519`
 
 If you created your SSH key in a different location, use that path instead.
-
-You can get the IP addresses from Terraform outputs after deployment.
-
-Run:
-
-```bash
-cd platform
-terraform output vm_public_ips
-terraform output vm_private_ips
-```
-
-Expected result:
-
-- VM1 has a public IP
-- VM2 does not have a public IP
-- VM2 has a private IP in the spoke subnet
-
-You can also find the IP addresses in Azure Portal:
-
-1. Open Azure Portal at `https://portal.azure.com`
-2. Open the resource group for the lab
-3. Open VM1 and note its public IP
-4. Open VM2 and note its private IP
 
 Important traffic path for this lab:
 
@@ -95,6 +70,7 @@ Run:
 
 ```bash
 cd platform
+terraform init
 terraform apply -var-file=terraform.tfvars
 ```
 
@@ -167,6 +143,7 @@ Then run the Lab 1 Terraform command from the `platform` folder:
 
 ```bash
 cd platform
+terraform init
 terraform apply -var-file=../labs/tfvars/lab01_nsg.tfvars
 ```
 
@@ -343,3 +320,4 @@ Destroy the environment from the `platform` folder:
 cd platform
 terraform destroy -var-file=../labs/tfvars/lab01_nsg.tfvars
 ```
+

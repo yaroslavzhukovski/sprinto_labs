@@ -52,6 +52,7 @@ Run:
 
 ```bash
 cd platform
+terraform init
 terraform apply -var-file=terraform.tfvars
 ```
 
@@ -290,6 +291,7 @@ Then run:
 
 ```bash
 cd platform
+terraform init
 terraform apply -var-file=../labs/tfvars/lab04_private_endpoint_dns.tfvars
 ```
 
@@ -452,3 +454,4 @@ Then destroy the lab environment:
 cd platform
 terraform destroy -var-file=../labs/tfvars/lab04_private_endpoint_dns.tfvars
 ```
+

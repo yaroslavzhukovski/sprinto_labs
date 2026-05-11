@@ -51,6 +51,7 @@ Run:
 
 ```bash
 cd platform
+terraform init
 terraform apply -var-file=terraform.tfvars
 ```
 
@@ -140,6 +141,7 @@ Run:
 
 ```bash
 cd platform
+terraform init
 terraform apply -var-file=../labs/tfvars/lab03_storage_rbac.tfvars
 ```
 
@@ -290,3 +292,4 @@ terraform destroy -var-file=../labs/tfvars/lab03_storage_rbac.tfvars
 ```
 
 Use the Lab 3 tfvars file for destroy because the current deployed state is the Lab 3 scenario.
+
