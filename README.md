@@ -4,7 +4,7 @@ Beginner-friendly Azure lab environment built with Terraform.
 
 This repository is for students who are learning Azure, not advanced Terraform. Terraform is used here to create the same lab environment for every student, keep the labs repeatable, and make it easy to destroy and rebuild the environment between lessons.
 
-If you are starting for the first time, read [GETTING_STARTED.md] and follow it step by step.
+If you are starting for the first time, read GETTING_STARTED.md and follow it step by step.
 
 ## What This Project Does
 
