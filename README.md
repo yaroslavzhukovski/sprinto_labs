@@ -4,7 +4,7 @@ Beginner-friendly Azure lab environment built with Terraform.
 
 This repository is for students who are learning Azure, not advanced Terraform. Terraform is used here to create the same lab environment for every student, keep the labs repeatable, and make it easy to destroy and rebuild the environment between lessons.
 
-If you are starting for the first time, read [GETTING_STARTED.md](/Users/yaros/Documents/LiaAzureLab/GETTING_STARTED.md) and follow it step by step.
+If you are starting for the first time, read [GETTING_STARTED.md] and follow it step by step.
 
 ## What This Project Does
 
@@ -135,6 +135,7 @@ The labs are designed to stay within a beginner-friendly range and usually focus
 ### Lab 1 - Network Security Groups
 
 File:
+
 - `labs/tfvars/lab01_nsg.tfvars`
 
 Students learn:
@@ -146,6 +147,7 @@ Students learn:
 ### Lab 2 - Routing
 
 File:
+
 - `labs/tfvars/lab02_routing.tfvars`
 
 Students learn:
@@ -158,6 +160,7 @@ Students learn:
 ### Lab 3 - Storage RBAC
 
 File:
+
 - `labs/tfvars/lab03_storage_rbac.tfvars`
 
 Students learn:
@@ -169,6 +172,7 @@ Students learn:
 ### Lab 4 - Public vs Private Storage Access
 
 File:
+
 - `labs/tfvars/lab04_private_endpoint_dns.tfvars`
 
 Students learn:
@@ -181,6 +185,7 @@ Students learn:
 ### Lab 5 - Diagnostics and Log Analytics
 
 File:
+
 - `labs/tfvars/lab05_monitoring_alerts.tfvars`
 
 Students learn:
@@ -193,6 +198,7 @@ Students learn:
 ### Lab 6 - Azure Bastion
 
 File:
+
 - `labs/tfvars/lab06_bastion_vmss.tfvars`
 
 Students learn:
@@ -205,6 +211,7 @@ Students learn:
 ### Lab 7 - Azure Policy
 
 Student instructions:
+
 - `labs/docs/lab07.md`
 
 Students learn:
